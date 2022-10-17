@@ -18,16 +18,20 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
     public String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     public Author author;
 
+    public Author getAuthor() {
+        return author;
+    }
+
     public Date release_date;
 
-    private boolean for_sale;
+    public boolean for_sale;
 
-    private double price;
+    public double price;
 }

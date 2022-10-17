@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -47,6 +48,51 @@ public class BookController {
         Book book = new Book(title, author, release_date, for_sale, price);
         bookRepository.save(book);
         return "redirect:";
+    }
+
+    @GetMapping("/edit/{book}")
+    public String bookEdit(
+            Book book,
+            Model model) {
+        Iterable<Author> authors = authorRepository.findAll();
+        model.addAttribute("authors", authors);
+        model.addAttribute("release_date", new SimpleDateFormat("yyyy-MM-dd").format(book.release_date));
+        model.addAttribute("book", book);
+        return "book/edit";
+    }
+
+    @PostMapping("/edit/{book}")
+    public String bookPostEdit(
+            @RequestParam String title,
+            @RequestParam Author author,
+            @RequestParam Date release_date,
+            @RequestParam boolean for_sale,
+            @RequestParam double price,
+            Book book
+    ) {
+        book.title = title;
+        book.author = author;
+        book.release_date = release_date;
+        book.for_sale = for_sale;
+        book.price = price;
+        bookRepository.save(book);
+        return "redirect:../";
+    }
+
+    @GetMapping("/show/{book}")
+    public String bookShow(
+            Book book,
+            Model model) {
+        model.addAttribute("release_date", new SimpleDateFormat("yyyy-MM-dd").format(book.release_date));
+        model.addAttribute("book", book);
+        return "book/show";
+    }
+
+    @PostMapping("/del/{book}")
+    public String bookDel(
+            Book book) {
+        bookRepository.delete(book);
+        return "redirect:../";
     }
 
     @GetMapping("/filter")

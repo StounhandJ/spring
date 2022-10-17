@@ -29,11 +29,12 @@
     <label>
         В продажи:
         <input type="checkbox" name="for_sale" placeholder="В продажи">
+        <input type='hidden' value='0' name='for_sale'>
     </label>
     <br>
     <label>
         Цена:
-        <input type="number" name="price" placeholder="Цена">
+        <input type="number" step="0.1" name="price" placeholder="Цена">
     </label>
     <br>
     <button type="submit">Добавить книгу</button>

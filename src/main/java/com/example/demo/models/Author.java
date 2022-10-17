@@ -24,6 +24,10 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
+     public Long getId() {
+        return id;
+    }
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Book> books = new ArrayList<>();
 

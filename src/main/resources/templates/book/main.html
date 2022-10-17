@@ -8,10 +8,16 @@
 <h1>Все книги</h1>
 <a href="/book/filter">Поиск книги</a>
 <a href="/book/add">Добавить книгу</a>
-<div th:each="el : ${books}">
-    <h3 th:text="${el.title}"></h3>
-    <p th:text="${el.author.name}"></p>
-    <p th:text="${el.release_date}"></p>
+<div th:each="book : ${books}">
+    <h3 th:text="${book.title}"></h3>
+    <p th:text="${book.author.name}"></p>
+    <p th:text="${book.release_date}"></p>
+    <p>
+        <a th:href="'/book/edit/'+${book.id}">Редактировать</a>
+        <a th:href="'/book/show/'+${book.id}">Посмореть</a>
+        <a href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
+    </p>
+    <form id="delForm" method="post" th:action="'/book/del/'+${book.id}"></form>
 </div>
 </body>
 </html>

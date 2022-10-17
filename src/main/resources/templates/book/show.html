@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title th:value="${book.title}"></title>
+</head>
+<body>
+<h3 th:text="${book.title}"></h3>
+    <p th:text="${book.author.id}"></p>
+    <p th:text="${book.author.name}"></p>
+    <p th:text="${release_date}"></p>
+    <p th:text="${book.for_sale}"></p>
+    <p th:text="${book.price}"></p>
+</body>
+</html>

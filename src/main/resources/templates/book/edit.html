@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title th:value="${'Редактирование статьи '+book.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="${'/book/edit/'+book.id}" method="post">
+    <label>
+        Название:
+        <input type="text" name="title" placeholder="Введите название кинги" th:value="${book.title}">
+    </label>
+    <br>
+    <label>
+        Автор:
+        <select th:field="${book.author}">
+            <option th:each="author : ${authors}"
+                    th:value="${author.id}"
+                    th:text="${author.name + ' | ' + author.birthday}">
+            </option>
+        </select>
+    </label>
+    <br>
+    <label>
+        Дата выпуска:
+        <input type="date" name="release_date" placeholder="Выберите дату выпуска" th:value="${release_date}">
+    </label>
+    <br>
+    <label>
+        В продажи:
+        <input type="checkbox" name="for_sale" placeholder="В продажи" th:checked="${book.for_sale}">
+        <input type='hidden' value='0' name='for_sale'>
+    </label>
+    <br>
+    <label>
+        Цена:
+        <input type="number" step="0.1" name="price" placeholder="Цена" th:value="${book.price}">
+    </label>
+    <br>
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

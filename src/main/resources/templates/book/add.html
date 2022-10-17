@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Добавление новой статьи</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="${'/book/add'}" method="post">
+    <label>
+        Название:
+        <input type="text" name="title" placeholder="Введите название кинги">
+    </label>
+    <br>
+    <label>
+        Автор:
+        <select name="author">
+            <option th:each="author : ${authors}"
+                    th:value="${author.id}"
+                    th:text="${author.name + ' | ' + author.birthday}">Wireframe
+            </option>
+        </select>
+    </label>
+    <br>
+    <label>
+        Дата выпуска:
+        <input type="date" name="release_date" placeholder="Выберите дату выпуска">
+    </label>
+    <br>
+    <label>
+        В продажи:
+        <input type="checkbox" name="for_sale" placeholder="В продажи">
+    </label>
+    <br>
+    <label>
+        Цена:
+        <input type="number" name="price" placeholder="Цена">
+    </label>
+    <br>
+    <button type="submit">Добавить книгу</button>
+</form>
+</body>
+</html>

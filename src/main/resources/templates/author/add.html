@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Добавление нового автора</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="${'/author/add'}" method="post">
+    <label>
+        ФИО:
+        <input type="text" name="name" placeholder="Введите ФИО автора">
+    </label>
+    <br>
+    <label>
+        Дата раождения:
+        <input type="date" name="birthday" placeholder="Выберите дату рождения">
+    </label>
+    <br>
+    <label>
+        Мужчина/Женщина:
+        <input type="checkbox" name="gender" placeholder="Пол">
+    </label>
+    <br>
+    <label>
+        Год начала работы:
+        <input type="number" name="start_year" placeholder="Год начала">
+    </label>
+    <br><label>
+        Бюджет:
+        <input type="number" name="budget" placeholder="Бюджет">
+    </label>
+    <br>
+    <button type="submit">Добавить автора</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Книги</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Все книги</h1>
+<a href="/book/filter">Поиск книги</a>
+<a href="/book/add">Добавить книгу</a>
+<div th:each="el : ${books}">
+    <h3 th:text="${el.title}"></h3>
+    <p th:text="${el.author.name}"></p>
+    <p th:text="${el.release_date}"></p>
+</div>
+</body>
+</html>

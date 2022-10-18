@@ -21,10 +21,9 @@
         <div class="px-6 pt-4 pb-2">
             <a class="underline text-blue-600"  th:href="'/author/edit/'+${author.id}">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/author/show/'+${author.id}">Посмореть</a>
-            <a class="underline text-blue-600"  href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
+            <a class="underline text-blue-600"  th:href="'/author/del/'+${author.id}">Удалить</a>
         </div>
     </div>
-    <form id="delForm" method="post" th:action="'/author/del/'+${author.id}"></form>
 </div>
 </body>
 </html>

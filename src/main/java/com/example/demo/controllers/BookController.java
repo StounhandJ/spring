@@ -88,7 +88,7 @@ public class BookController {
         return "book/show";
     }
 
-    @PostMapping("/del/{book}")
+    @GetMapping("/del/{book}")
     public String bookDel(
             Book book) {
         bookRepository.delete(book);

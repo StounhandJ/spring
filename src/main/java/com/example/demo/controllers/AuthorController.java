@@ -86,7 +86,7 @@ public class AuthorController {
         return "author/show";
     }
 
-    @PostMapping("/del/{author}")
+    @GetMapping("/del/{author}")
     public String authorDel(
             Author author) {
         authorRepository.delete(author);

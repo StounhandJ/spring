@@ -3,14 +3,28 @@
 <head>
     <title>Авторы</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+
+<div th:insert="header">...</div>
+
 <h1>Все авторы</h1>
-<a href="/author/filter">Поиск автора</a>
-<a href="/author/add">Добавить автора</a>
-<div th:each="el : ${authors}">
-    <h3 th:text="${el.name}"></h3>
-    <p th:text="${el.birthday}"></p>
+<a class="underline text-blue-600" href="/author/filter">Поиск автора</a>
+<a class="underline text-blue-600" href="/author/add">Добавить автора</a>
+<div th:each="author : ${authors}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${author.name}"/>
+            <p class="text-gray-700 text-base" th:text="${author.birthday}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600"  th:href="'/author/edit/'+${author.id}">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/author/show/'+${author.id}">Посмореть</a>
+            <a class="underline text-blue-600"  href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
+        </div>
+    </div>
+    <form id="delForm" method="post" th:action="'/author/del/'+${author.id}"></form>
 </div>
 </body>
 </html>

@@ -3,20 +3,28 @@
 <head>
     <title>Книги</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+
+<div th:insert="header">...</div>
+
 <h1>Все книги</h1>
-<a href="/book/filter">Поиск книги</a>
-<a href="/book/add">Добавить книгу</a>
+<a class="underline text-blue-600"  href="/book/filter">Поиск книги</a>
+<a class="underline text-blue-600"  href="/book/add">Добавить книгу</a>
 <div th:each="book : ${books}">
-    <h3 th:text="${book.title}"></h3>
-    <p th:text="${book.author.name}"></p>
-    <p th:text="${book.release_date}"></p>
-    <p>
-        <a th:href="'/book/edit/'+${book.id}">Редактировать</a>
-        <a th:href="'/book/show/'+${book.id}">Посмореть</a>
-        <a href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
-    </p>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${book.title}"/>
+            <p class="text-gray-700 text-base" th:text="${book.author.name}"></p>
+            <p class="text-gray-700 text-base" th:text="${book.release_date}"></p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600" th:href="'/book/edit/'+${book.id}">Редактировать</a>
+            <a class="underline text-blue-600" th:href="'/book/show/'+${book.id}">Посмореть</a>
+            <a class="underline text-blue-600" href="#" onclick="document.getElementById('delForm').submit();">Удалить</a>
+        </div>
+    </div>
     <form id="delForm" method="post" th:action="'/book/del/'+${book.id}"></form>
 </div>
 </body>

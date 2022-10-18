@@ -5,6 +5,9 @@
     <title>Поиск книг</title>
 </head>
 <body>
+
+<div th:insert="header">...</div>
+
 <h2>Фильтрация</h2>
 <form method="get" th:action="${'/book/filter'}">
     <label>

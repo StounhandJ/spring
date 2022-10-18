@@ -5,6 +5,9 @@
     <title>Поиск авторов</title>
 </head>
 <body>
+
+<div th:insert="header">...</div>
+
 <h2>Фильтрация</h2>
 <form method="get" th:action="${'/author/filter'}">
     <label>

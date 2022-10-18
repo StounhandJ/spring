@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Добавление нового автора</title>
+    <title th:value="${'Редактирование автор '+author.name}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -10,24 +10,24 @@
 <div th:insert="header">...</div>
 
 <div class="w-full max-w-xs">
-    <form th:action="${'/author/add'}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form th:action="${'/author/edit/'+author.id}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">ФИО</label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="text" name="name" placeholder="Введите ФИО автора">
+                   type="text" name="name" placeholder="Введите ФИО автора" th:value="${author.name}">
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Дата раождения</label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="date" name="birthday" placeholder="Выберите дату рождения">
+                   type="date" name="birthday" placeholder="Выберите дату рождения" th:value="${birthday}">
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Мужчина/Женщина</label>
 
             <input class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                   type="checkbox" name="gender" placeholder="Пол">
+                   type="checkbox" name="gender" placeholder="Пол" th:checked="${author.gender}">
             <input type='hidden' value='0' name='gender'>
         </div>
 
@@ -35,17 +35,17 @@
             <label class="block text-gray-700 text-sm font-bold mb-2">Год начала работы</label>
 
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="number" name="start_year" placeholder="Год начала">
+                   type="number" name="start_year" placeholder="Год начала" th:value="${author.start_year}">
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Бюджет</label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="number" step="0.1" name="budget" placeholder="Бюджет">
+                   type="number" step="0.1" name="budget" placeholder="Бюджет" th:value="${author.budget}">
         </div>
 
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Добавить автора
+                type="submit">Сохранить
         </button>
     </form>
 </div>

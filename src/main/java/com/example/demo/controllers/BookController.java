@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.repo.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -31,7 +33,7 @@ public class BookController {
     }
 
     @GetMapping("/add")
-    public String bookAdd(Model model) {
+    public String bookAdd(Book book, Model model) {
         Iterable<Author> authors = authorRepository.findAll();
         model.addAttribute("authors", authors);
         return "book/add";
@@ -39,42 +41,39 @@ public class BookController {
 
     @PostMapping("/add")
     public String bookPostAdd(
-            @RequestParam String title,
-            @RequestParam Author author,
-            @RequestParam Date release_date,
-            @RequestParam boolean for_sale,
-            @RequestParam double price
+            @ModelAttribute("book") @Valid Book book,
+            BindingResult bindingResult,
+            Model model
     ) {
-        Book book = new Book(title, author, release_date, for_sale, price);
+        if (bindingResult.hasErrors()) {
+            Iterable<Author> authors = authorRepository.findAll();
+            model.addAttribute("authors", authors);
+            return "book/add";
+        }
         bookRepository.save(book);
         return "redirect:";
     }
 
     @GetMapping("/edit/{book}")
     public String bookEdit(
-            Book book,
+            @ModelAttribute("book") @Valid Book book,
             Model model) {
         Iterable<Author> authors = authorRepository.findAll();
         model.addAttribute("authors", authors);
-        model.addAttribute("release_date", new SimpleDateFormat("yyyy-MM-dd").format(book.release_date));
-        model.addAttribute("book", book);
         return "book/edit";
     }
 
     @PostMapping("/edit/{book}")
     public String bookPostEdit(
-            @RequestParam String title,
-            @RequestParam Author author,
-            @RequestParam Date release_date,
-            @RequestParam boolean for_sale,
-            @RequestParam double price,
-            Book book
+            @ModelAttribute("book") @Valid Book book,
+            BindingResult bindingResult,
+            Model model
     ) {
-        book.title = title;
-        book.author = author;
-        book.release_date = release_date;
-        book.for_sale = for_sale;
-        book.price = price;
+        if (bindingResult.hasErrors()) {
+            Iterable<Author> authors = authorRepository.findAll();
+            model.addAttribute("authors", authors);
+            return "book/edit";
+        }
         bookRepository.save(book);
         return "redirect:../";
     }

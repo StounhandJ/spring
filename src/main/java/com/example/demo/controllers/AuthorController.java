@@ -1,22 +1,16 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Author;
-import com.example.demo.models.Author;
-import com.example.demo.models.Book;
 import com.example.demo.repo.AuthorRepository;
-import com.example.demo.repo.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("author")
@@ -33,20 +27,19 @@ public class AuthorController {
     }
 
     @GetMapping("/add")
-    public String authorAdd() {
+    public String authorAdd(Author author) {
         return "author/add";
     }
 
     @PostMapping("/add")
     public String authorPostAdd(
-            @RequestParam String name,
-            @RequestParam Date birthday,
-            @RequestParam boolean gender,
-            @RequestParam int start_year,
-            @RequestParam double budget
+            @ModelAttribute("author") @Valid Author author,
+            BindingResult bindingResult
     ) {
-        Author book = new Author(name, birthday, gender, start_year, budget);
-        authorRepository.save(book);
+        if (bindingResult.hasErrors()){
+            return "author/add";
+        }
+        authorRepository.save(author);
         return "redirect:";
     }
 
@@ -61,18 +54,12 @@ public class AuthorController {
 
     @PostMapping("/edit/{author}")
     public String authorPostEdit(
-            @RequestParam String name,
-            @RequestParam Date birthday,
-            @RequestParam boolean gender,
-            @RequestParam int start_year,
-            @RequestParam double budget,
-            Author author
+            @ModelAttribute("author") @Valid Author author,
+            BindingResult bindingResult
     ) {
-        author.name = name;
-        author.birthday = birthday;
-        author.gender = gender;
-        author.start_year = start_year;
-        author.budget = budget;
+        if (bindingResult.hasErrors()){
+            return "author/edit";
+        }
         authorRepository.save(author);
         return "redirect:../";
     }

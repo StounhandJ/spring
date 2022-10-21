@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Book {
@@ -42,6 +43,21 @@ public class Book {
     @NotNull
     @Positive
     public double price;
+
+    @NotNull
+    @ManyToMany
+    @JoinTable (name="genres_books",
+            joinColumns=@JoinColumn (name="book_id"),
+            inverseJoinColumns=@JoinColumn(name="genre_id"))
+    public Set<Genre> genres;
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
 
     public Author getAuthor() {
         return author;

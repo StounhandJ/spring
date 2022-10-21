@@ -57,6 +57,9 @@ public class Author {
     @NotNull
     public double budget;
 
+    @OneToOne(mappedBy = "author")
+    public Genre genre;
+
 
     public String getName() {
         return name;

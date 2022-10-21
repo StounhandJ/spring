@@ -2,8 +2,10 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.Author;
 import com.example.demo.models.Book;
+import com.example.demo.models.Genre;
 import com.example.demo.repo.AuthorRepository;
 import com.example.demo.repo.BookRepository;
+import com.example.demo.repo.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.repo.PostRepository;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class BookController {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
     @GetMapping()
     public String bookMain(Model model) {
         Iterable<Book> books = bookRepository.findAll();
@@ -35,7 +40,9 @@ public class BookController {
     @GetMapping("/add")
     public String bookAdd(Book book, Model model) {
         Iterable<Author> authors = authorRepository.findAll();
+        Iterable<Genre> genres = genreRepository.findAll();
         model.addAttribute("authors", authors);
+        model.addAttribute("genres", genres);
         return "book/add";
     }
 
@@ -47,7 +54,9 @@ public class BookController {
     ) {
         if (bindingResult.hasErrors()) {
             Iterable<Author> authors = authorRepository.findAll();
+            Iterable<Genre> genres = genreRepository.findAll();
             model.addAttribute("authors", authors);
+            model.addAttribute("genres", genres);
             return "book/add";
         }
         bookRepository.save(book);
@@ -59,7 +68,9 @@ public class BookController {
             @ModelAttribute("book") @Valid Book book,
             Model model) {
         Iterable<Author> authors = authorRepository.findAll();
+        Iterable<Genre> genres = genreRepository.findAll();
         model.addAttribute("authors", authors);
+        model.addAttribute("genres", genres);
         return "book/edit";
     }
 
@@ -71,7 +82,9 @@ public class BookController {
     ) {
         if (bindingResult.hasErrors()) {
             Iterable<Author> authors = authorRepository.findAll();
+            Iterable<Genre> genres = genreRepository.findAll();
             model.addAttribute("authors", authors);
+            model.addAttribute("genres", genres);
             return "book/edit";
         }
         bookRepository.save(book);

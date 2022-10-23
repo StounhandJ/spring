@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование пользователя</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<form th:action="${'/admin'}" method="post">
+    <div th:each="el : ${user}">
+        <input type="hidden" th:value="${el.id}" name="userId">
+        <input type="text" name="username" th:value="${el.username}">
+    </div>
+    <div th:each="role : ${roles}">
+        <div th:each="el : ${user}">
+        <input th:id="${role}" type="checkbox" th:name="${'roles[]'}" th:value="${role}"
+               th:checked="${#lists.contains(el.roles, role)}"/>
+        <label th:text="${role}" /></label>
+    </div>
+    </div>
+    <br>
+    <button type="submit">Сохранить изменения</button>
+</form>
+</body>
+</html>

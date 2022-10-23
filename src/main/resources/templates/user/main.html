@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <title>Список пользователей</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div th:each="el : ${users}">
+  <p th:text="${el.username}"></p>
+  <p th:text="${el.roles}"></p>
+  <a th:href="'/admin/' + ${el.id} + '/edit'">Редактировать</a>
+</div>
+</body>
+</html>

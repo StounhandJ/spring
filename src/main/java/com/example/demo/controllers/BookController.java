@@ -65,7 +65,7 @@ public class BookController {
 
     @GetMapping("/edit/{book}")
     public String bookEdit(
-            @ModelAttribute("book") @Valid Book book,
+            Book book,
             Model model) {
         Iterable<Author> authors = authorRepository.findAll();
         Iterable<Genre> genres = genreRepository.findAll();

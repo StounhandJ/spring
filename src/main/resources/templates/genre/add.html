@@ -23,12 +23,13 @@
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Автор</label>
             <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
-            <select th:field="*{author}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <select th:field="*{author}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="author">
                 <option th:each="author : ${authors}"
-                        th:if="${author.genre==null}"
+                        th:if="${(genre.author != null && author.id == genre.author.id) || author.genre==null}"
                         th:value="${author.id}"
-                        th:text="${author.name + ' | ' + author.birthday}">Wireframe
+                        th:text="${author.name + ' | ' + author.birthday}">
                 </option>
             </select>
         </div>

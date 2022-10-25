@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.models.Author;
 import com.example.demo.repo.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,13 @@ public class AuthorController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String authorAdd(Author author) {
         return "author/add";
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String authorPostAdd(
             @ModelAttribute("author") @Valid Author author,
             BindingResult bindingResult
@@ -44,6 +47,7 @@ public class AuthorController {
     }
 
     @GetMapping("/edit/{author}")
+    @PreAuthorize("isAuthenticated()")
     public String authorEdit(
             Author author,
             Model model) {
@@ -53,6 +57,7 @@ public class AuthorController {
     }
 
     @PostMapping("/edit/{author}")
+    @PreAuthorize("isAuthenticated()")
     public String authorPostEdit(
             @ModelAttribute("author") @Valid Author author,
             BindingResult bindingResult
@@ -74,6 +79,7 @@ public class AuthorController {
     }
 
     @GetMapping("/del/{author}")
+    @PreAuthorize("isAuthenticated()")
     public String authorDel(
             Author author) {
         authorRepository.delete(author);

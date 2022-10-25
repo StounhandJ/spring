@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
 <head>
     <title>Авторы</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -11,7 +11,7 @@
 
 <h1>Все авторы</h1>
 <a class="underline text-blue-600" href="/author/filter">Поиск автора</a>
-<a class="underline text-blue-600" href="/author/add">Добавить автора</a>
+<a class="underline text-blue-600" href="/author/add" sec:authorize="isAuthenticated()">Добавить автора</a>
 <div th:each="author : ${authors}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
@@ -19,9 +19,9 @@
             <p class="text-gray-700 text-base" th:text="${author.birthday}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <a class="underline text-blue-600"  th:href="'/author/edit/'+${author.id}">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/author/edit/'+${author.id}" sec:authorize="isAuthenticated()">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/author/show/'+${author.id}">Посмореть</a>
-            <a class="underline text-blue-600"  th:href="'/author/del/'+${author.id}">Удалить</a>
+            <a class="underline text-blue-600"  th:href="'/author/del/'+${author.id}" sec:authorize="isAuthenticated()">Удалить</a>
         </div>
     </div>
 </div>

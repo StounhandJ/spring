@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
 <head>
     <title>Жанры</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -10,16 +10,16 @@
 <div th:insert="header">...</div>
 
 <h1>Все Жанры</h1>
-<a class="underline text-blue-600" href="/genre/add">Добавить жанр</a>
+<a class="underline text-blue-600" href="/genre/add" sec:authorize="isAuthenticated()">Добавить жанр</a>
 <div th:each="genre : ${genres}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2" th:text="${genre.name}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <a class="underline text-blue-600"  th:href="'/genre/edit/'+${genre.id}">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/genre/edit/'+${genre.id}" sec:authorize="isAuthenticated()">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/genre/show/'+${genre.id}">Посмореть</a>
-            <a class="underline text-blue-600"  th:href="'/genre/del/'+${genre.id}">Удалить</a>
+            <a class="underline text-blue-600"  th:href="'/genre/del/'+${genre.id}" sec:authorize="isAuthenticated()">Удалить</a>
         </div>
     </div>
 </div>

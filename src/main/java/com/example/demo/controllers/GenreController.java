@@ -5,6 +5,7 @@ import com.example.demo.models.Genre;
 import com.example.demo.repo.AuthorRepository;
 import com.example.demo.repo.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class GenreController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String bookAdd(Genre genre, Model model) {
         Iterable<Author> authors = authorRepository.findAll();
         model.addAttribute("authors", authors);
@@ -39,6 +41,7 @@ public class GenreController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public String bookPostAdd(
             @ModelAttribute("genre") @Valid Genre genre,
             BindingResult bindingResult,
@@ -54,6 +57,7 @@ public class GenreController {
     }
 
     @GetMapping("/edit/{genre}")
+    @PreAuthorize("isAuthenticated()")
     public String bookEdit(Genre genre, Model model) {
         Iterable<Author> authors = authorRepository.findAll();
         model.addAttribute("authors", authors);
@@ -61,6 +65,7 @@ public class GenreController {
     }
 
     @PostMapping("/edit/{genre}")
+    @PreAuthorize("isAuthenticated()")
     public String bookPostEdit(
             @ModelAttribute("genre") @Valid Genre genre,
             BindingResult bindingResult,
@@ -82,6 +87,7 @@ public class GenreController {
     }
 
     @GetMapping("/del/{genre}")
+    @PreAuthorize("isAuthenticated()")
     public String bookDel(
             Genre genre) {
         genreRepository.delete(genre);

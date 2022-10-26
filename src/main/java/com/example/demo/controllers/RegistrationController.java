@@ -27,7 +27,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model){
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+        User userFromDb = userRepository.findByLogin(user.getLogin());
         if(userFromDb != null)
         {
             model.addAttribute("message", "Пользователь с таким логином уже зарегистрирован");

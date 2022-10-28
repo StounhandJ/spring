@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
+<head>
+    <title>Мед.препараты</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<h1>Все Мед.Препараты</h1>
+<a class="underline text-blue-600" href="/medicalPreparations/add" sec:authorize="isAuthenticated()">Добавить мед.препарат</a>
+<div th:each="medicalPreparations : ${medicalPreparationss}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${medicalPreparations.name}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/edit/'+${medicalPreparations.id}" sec:authorize="isAuthenticated()">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/show/'+${medicalPreparations.id}">Посмореть</a>
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/del/'+${medicalPreparations.id}" sec:authorize="isAuthenticated()">Удалить</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

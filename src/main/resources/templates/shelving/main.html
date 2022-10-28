@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       lang="ru">
 <head>
-    <title>Стелажи</title>
+    <title>Стеллажи</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -11,7 +11,7 @@
 <div th:insert="header">...</div>
 
 <h1>Все Стелажи</h1>
-<a class="underline text-blue-600" href="/shelving/add" sec:authorize="isAuthenticated()">Добавить стелаж</a>
+<a class="underline text-blue-600" href="/shelving/add" sec:authorize="isAuthenticated()">Добавить стеллаж</a>
 <div th:each="shelving : ${shelvings}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

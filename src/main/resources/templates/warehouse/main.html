@@ -9,7 +9,7 @@
 
 <div th:insert="header">...</div>
 
-<h1>Все Жанры</h1>
+<h1>Все Склады</h1>
 <a class="underline text-blue-600" href="/warehouse/add" sec:authorize="isAuthenticated()">Добавить склад</a>
 <div th:each="warehouse : ${warehouses}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">

@@ -5,6 +5,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class MedicalPreparations {
@@ -24,6 +26,9 @@ public class MedicalPreparations {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     public TypePreparation typePreparation;
+
+    @OneToMany(mappedBy = "medicalPreparations", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Cancellation> cancellations = new ArrayList<>();
 
     public String getName() {
         return name;

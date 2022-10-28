@@ -3,12 +3,11 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Warehouse {
+public class Shelving {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,8 +17,9 @@ public class Warehouse {
     @Size(min = 1, max = 70)
     public String name;
 
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Shelving> shelving = new ArrayList<>();
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    public Warehouse warehouse;
 
     public String getName() {
         return name;
@@ -27,5 +27,13 @@ public class Warehouse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 }

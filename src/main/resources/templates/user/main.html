@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
   <title>Список пользователей</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,10 +9,18 @@
 
 <div th:insert="header">...</div>
 
-<div th:each="el : ${users}">
-  <p th:text="${el.username}"></p>
-  <p th:text="${el.roles}"></p>
-  <a th:href="'/admin/' + ${el.id} + '/edit'">Редактировать</a>
+<a class="underline text-blue-600" href="/user/add" sec:authorize="isAuthenticated()">Добавить пользователя</a>
+<div th:each="user : ${users}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${user.username}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600"  th:href="'/user/edit/'+${user.id}" sec:authorize="isAuthenticated()">Редактировать</a>
+<!--            <a class="underline text-blue-600"  th:href="'/typeTreatment/show/'+${user.id}">Посмореть</a>-->
+            <a class="underline text-blue-600"  th:href="'/user/del/'+${user.id}" sec:authorize="isAuthenticated()">Удалить</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

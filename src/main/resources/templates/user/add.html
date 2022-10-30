@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Редактирование пользователя</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Добавление нового пользователя</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div th:insert="header">...</div>
 
 <div class="w-full max-w-xs">
-    <form th:action="${'/user/edit/'+user.id}" th:object="${user}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form th:action="${'/user/add'}" method="post" th:object="${user}"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
         <div class="mb-4">
              <label class="block text-gray-700 text-sm font-bold mb-2">Логин</label>
@@ -18,6 +19,14 @@
             <input th:field="*{login}"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    type="text" name="name" placeholder="Введите логин">
+        </div>
+
+        <div class="mb-4">
+             <label class="block text-gray-700 text-sm font-bold mb-2">Пароль</label>
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <input th:field="*{password}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="text" name="name" placeholder="Введите пароль">
         </div>
 
         <div class="mb-4">
@@ -62,7 +71,7 @@
         </div>
 
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Сохранить
+                type="submit">Добавить пользователя
         </button>
     </form>
 </div>

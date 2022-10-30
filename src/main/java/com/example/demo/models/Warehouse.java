@@ -11,7 +11,7 @@ import java.util.List;
 public class Warehouse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @NotBlank

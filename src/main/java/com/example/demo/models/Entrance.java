@@ -12,7 +12,7 @@ import java.util.Date;
 public class Entrance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @NotNull

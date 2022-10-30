@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class Shelving {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @NotBlank

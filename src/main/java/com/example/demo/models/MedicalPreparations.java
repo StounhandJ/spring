@@ -12,7 +12,7 @@ import java.util.List;
 public class MedicalPreparations {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @NotBlank

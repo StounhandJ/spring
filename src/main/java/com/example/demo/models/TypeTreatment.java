@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class TypeTreatment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @NotBlank

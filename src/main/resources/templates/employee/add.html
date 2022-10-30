@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Добавление нового сотрудника</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div class="w-full max-w-xs">
+    <form th:action="${'/employee/add'}" method="post" th:object="${employee}"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Пользователь</label>
+            <div style="color: red" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+            <select th:field="*{user}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="author">
+                <option th:each="user : ${users}"
+                        th:if="${(employee.user != null && user.id.equals(employee.user.id)) || (user.employee==null && user.client==null)}"
+                        th:value="${user.id}"
+                        th:text="${user.name + ' | ' + user.birthdate}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Зарплата</label>
+            <div style="color: red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+            <input th:field="*{salary}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="number" step="0.1" name="price" placeholder="Зарплата">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата принятия</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_of_employment')}" th:errors="*{date_of_employment}"></div>
+            <input th:field="*{date_of_employment}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="release_date" placeholder="Выберите дату принятия">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата увольнения</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_of_dismissal')}" th:errors="*{date_of_dismissal}"></div>
+            <input th:field="*{date_of_dismissal}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="release_date" placeholder="Выберите дату увольнения">
+        </div>
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">Добавить сотрудника
+        </button>
+    </form>
+</div>
+</body>
+</html>

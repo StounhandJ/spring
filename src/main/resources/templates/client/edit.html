@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title th:value="${'Редактирование клиентов '+client.user.name}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div class="w-full max-w-xs">
+    <form th:action="${'/client/edit/'+client.id}" th:object="${client}" method="post"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+         <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Пользователь</label>
+            <div style="color: red" th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+            <select th:field="*{user}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="author">
+                <option th:each="user : ${users}"
+                        th:if="${(client.user != null && user.id.equals(client.user.id)) || (user.employee==null && user.client==null)}"
+                        th:value="${user.id}"
+                        th:text="${user.name + ' | ' + user.birthdate}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата прикрепления</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_of_attachment')}" th:errors="*{date_of_attachment}"></div>
+            <input th:field="*{date_of_attachment}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="release_date" placeholder="Выберите дату прикрепления">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата открипления</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_detachments')}" th:errors="*{date_detachments}"></div>
+            <input th:field="*{date_detachments}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="release_date" placeholder="Выберите дату открипления">
+        </div>
+
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">Сохранить
+        </button>
+    </form>
+</div>
+</body>
+</html>

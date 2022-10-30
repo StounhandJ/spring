@@ -53,6 +53,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    public Client client;
+
+    @OneToOne(mappedBy = "user")
+    public Employee employee;
+
     public Long getId() {
         return id;
     }

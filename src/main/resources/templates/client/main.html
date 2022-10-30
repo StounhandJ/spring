@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="ru">
+<head>
+    <title>Клиенты</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<h1>Все клиенты</h1>
+<a class="underline text-blue-600" href="/client/add" sec:authorize="isAuthenticated()">Добавить клиента</a>
+<div th:each="client : ${clients}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${client.user.name}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600" th:href="'/client/edit/'+${client.id}"
+               sec:authorize="isAuthenticated()">Редактировать</a>
+            <a class="underline text-blue-600" th:href="'/client/show/'+${client.id}">Посмореть</a>
+            <a class="underline text-blue-600" th:href="'/client/del/'+${client.id}"
+               sec:authorize="isAuthenticated()">Удалить</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("paidTreatmentPreparation")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class PaidTreatmentPreparationController {
 
     @Autowired
@@ -32,7 +33,6 @@ public class PaidTreatmentPreparationController {
     private MedicalPreparationsRepository medicalPreparationsRepository;
 
     @GetMapping("/add/{paidTreatment}")
-    @PreAuthorize("isAuthenticated()")
     public String paidTreatmentAdd(PaidTreatmentPreparation paidTreatmentPreparation, PaidTreatment paidTreatment, Model model) {
         var g = new PaidTreatmentPreparationKey();
         g.setPaidTreatmentId(paidTreatment.id);

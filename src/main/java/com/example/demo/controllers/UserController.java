@@ -1,25 +1,26 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Entrance;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
 public class UserController {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -46,6 +47,7 @@ public class UserController {
             return "user/add";
         }
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:";
     }

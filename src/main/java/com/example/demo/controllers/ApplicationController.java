@@ -7,6 +7,7 @@ import com.example.demo.repo.ApplicationRepository;
 import com.example.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("application")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
 public class ApplicationController {
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -29,15 +30,21 @@ public class ApplicationController {
 
     @GetMapping()
     public String applicationMain(Model model) {
-        List<User> user = userRepository.findByRoles(Role.ADMIN);
-        model.addAttribute("applications", applicationRepository.findAll());
+        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        if (user.getRoles().contains(Role.CLIENT)) {
+            model.addAttribute("applications", applicationRepository.findByClient_Id(user.getId()));
+        } else {
+            model.addAttribute("applications", applicationRepository.findAll());
+        }
+
         model.addAttribute("clients", userRepository.findByRoles(Role.CLIENT));
         model.addAttribute("doctors", userRepository.findByRoles(Role.DOCTOR));
         return "application/main";
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String applicationAdd(Application application, Model model) {
         model.addAttribute("clients", userRepository.findByRoles(Role.CLIENT));
         model.addAttribute("doctors", userRepository.findByRoles(Role.DOCTOR));
@@ -45,7 +52,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String applicationPostAdd(
             @ModelAttribute("application") @Valid Application application,
             BindingResult bindingResult,
@@ -61,7 +68,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/edit/{application}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String applicationEdit(Application application, Model model) {
         model.addAttribute("clients", userRepository.findByRoles(Role.CLIENT));
         model.addAttribute("doctors", userRepository.findByRoles(Role.DOCTOR));
@@ -70,7 +77,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/edit/{application}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String applicationPostEdit(
             @ModelAttribute("application") @Valid Application application,
             BindingResult bindingResult,
@@ -88,12 +95,13 @@ public class ApplicationController {
 
     @GetMapping("/show/{application}")
     public String applicationShow(
-            Application application) {
+            Application application, Model model) {
+        model.addAttribute("appli", application);
         return "application/show";
     }
 
     @GetMapping("/del/{application}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String applicationDel(
             Application application) {
         applicationRepository.delete(application);

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title th:value="${application.date}"></title>
+    <title th:value="${appli.client.login}"></title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
@@ -11,11 +11,12 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="${application.medicalPreparations.name}"/>
-        <div class="font-bold text-xl mb-2" th:text="${application.date}"/>
-    </div>
-    <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="${application.count}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Клиент: '+${appli.client.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Лечащий врач: '+${appli.formalizing_doctor.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата процедуры: '+${appli.date_of_treatment}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Текст обращения: '+${appli.text}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата обращения: '+${appli.application_date}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Регестрирующий врач: '+${appli.attending_doctor.login}"/>
     </div>
 </div>
 </body>

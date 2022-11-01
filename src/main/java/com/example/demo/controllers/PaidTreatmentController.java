@@ -1,11 +1,15 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.PaidTreatment;
-import com.example.demo.models.PaidTreatmentPreparation;
-import com.example.demo.models.keys.PaidTreatmentPreparationKey;
-import com.example.demo.repo.*;
+import com.example.demo.models.Role;
+import com.example.demo.models.User;
+import com.example.demo.repo.ApplicationRepository;
+import com.example.demo.repo.PaidTreatmentRepository;
+import com.example.demo.repo.TypeTreatmentRepository;
+import com.example.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +22,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("paidTreatment")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
 public class PaidTreatmentController {
     @Autowired
     private PaidTreatmentRepository paidTreatmentRepository;
@@ -28,8 +33,18 @@ public class PaidTreatmentController {
     @Autowired
     private TypeTreatmentRepository typeTreatmentRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping()
     public String paidTreatmentMain(Model model) {
+        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        if (user.getRoles().contains(Role.CLIENT)) {
+            model.addAttribute("paidTreatments", paidTreatmentRepository.findByApplicationClient_Id(user.getId()));
+        } else {
+            model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
+        }
         model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
@@ -37,7 +52,7 @@ public class PaidTreatmentController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String paidTreatmentAdd(PaidTreatment paidTreatment, Model model) {
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
@@ -45,7 +60,7 @@ public class PaidTreatmentController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String paidTreatmentPostAdd(
             @ModelAttribute("paidTreatment") @Valid PaidTreatment paidTreatment,
             BindingResult bindingResult,
@@ -61,7 +76,7 @@ public class PaidTreatmentController {
     }
 
     @GetMapping("/edit/{paidTreatment}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String paidTreatmentEdit(PaidTreatment paidTreatment, Model model) {
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
@@ -69,7 +84,7 @@ public class PaidTreatmentController {
     }
 
     @PostMapping("/edit/{paidTreatment}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String paidTreatmentPostEdit(
             @ModelAttribute("paidTreatment") @Valid PaidTreatment paidTreatment,
             BindingResult bindingResult,
@@ -86,12 +101,13 @@ public class PaidTreatmentController {
 
     @GetMapping("/show/{paidTreatment}")
     public String paidTreatmentShow(
-            PaidTreatment paidTreatment) {
+            PaidTreatment paidTreatment, Model model) {
+        model.addAttribute("paidTreatment", paidTreatment);
         return "paidTreatment/show";
     }
 
     @GetMapping("/del/{paidTreatment}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String paidTreatmentDel(
             PaidTreatment paidTreatment) {
         paidTreatmentRepository.delete(paidTreatment);

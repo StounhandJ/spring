@@ -11,7 +11,13 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="${cheque.application.application_date}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Клиент: '+${cheque.application.client.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Сумма оплаты: '+${cheque.amount}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата оплаты: '+${cheque.date}"/>
+        <div class="font-bold text-xl mb-2">
+            <label th:text="'Заявка: '"/>
+            <a class="underline text-blue-600"  th:href="'/application/show/'+${cheque.application.id}">Просмотреть</a>
+        </div>
     </div>
 </div>
 </body>

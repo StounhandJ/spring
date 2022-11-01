@@ -10,17 +10,17 @@
 <div th:insert="header">...</div>
 
 <h1>Все Платные услуги</h1>
-<a class="underline text-blue-600" href="/paidTreatment/add">Добавить платную услугу</a>
+<a class="underline text-blue-600" href="/paidTreatment/add"  sec:authorize="hasAnyAuthority('ADMIN')">Добавить платную услугу</a>
 <div th:each="paidTreatment : ${paidTreatments}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2" th:text="${paidTreatment.application.client.name+' | '+paidTreatment.application.application_date}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <a class="underline text-blue-600"  th:href="'/paidTreatmentPreparation/add/'+${paidTreatment.id}">Добавить мед.препарат</a>
-            <a class="underline text-blue-600"  th:href="'/paidTreatment/edit/'+${paidTreatment.id}">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/paidTreatmentPreparation/add/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN')">Добавить мед.препарат</a>
+            <a class="underline text-blue-600"  th:href="'/paidTreatment/edit/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN')">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/show/'+${paidTreatment.id}">Посмореть</a>
-            <a class="underline text-blue-600"  th:href="'/paidTreatment/del/'+${paidTreatment.id}">Удалить</a>
+            <a class="underline text-blue-600"  th:href="'/paidTreatment/del/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN')">Удалить</a>
         </div>
     </div>
 </div>

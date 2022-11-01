@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
 <head>
-    <title>Чеки</title>
+    <title>Платные услуги</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -9,8 +9,8 @@
 
 <div th:insert="header">...</div>
 
-<h1>Все Чеки</h1>
-<a class="underline text-blue-600" href="/paidTreatment/add">Добавить чек</a>
+<h1>Все Платные услуги</h1>
+<a class="underline text-blue-600" href="/paidTreatment/add">Добавить платную услугу</a>
 <div th:each="paidTreatment : ${paidTreatments}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

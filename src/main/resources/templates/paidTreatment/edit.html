@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title th:value="${'Редактирование мед.препарата '+paidTreatment.application.application_date}"></title>
+    <title th:value="${'Редактирование платной услуги '+paidTreatment.application.application_date}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <div class="w-full max-w-xs">
     <form th:action="${'/paidTreatment/edit/'+paidTreatment.id}" th:object="${paidTreatment}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-        <div class="mb-4">
+       <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Заявка</label>
             <div style="color: red" th:if="${#fields.hasErrors('application')}" th:errors="*{application}"></div>
             <select th:field="*{application}"
@@ -26,6 +26,20 @@
         </div>
 
         <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Тип терапии</label>
+            <div style="color: red" th:if="${#fields.hasErrors('typeTreatment')}" th:errors="*{typeTreatment}"></div>
+            <select th:field="*{typeTreatment}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="author">
+                <option th:each="typeTrea : ${typeTreatments}"
+                        th:value="${typeTrea.id}"
+                        th:text="${typeTrea.name}">
+                </option>
+            </select>
+        </div>
+
+
+        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Сумма</label>
             <div style="color: red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
             <input th:field="*{amount}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -33,11 +47,11 @@
         </div>
 
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Дата</label>
-            <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-            <input th:field="*{date}"
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата проведения</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_of_event')}" th:errors="*{date_of_event}"></div>
+            <input th:field="*{date_of_event}"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="date" name="release_date" placeholder="Выберите дату">
+                   type="date" name="release_date" placeholder="Выберите дату проведения">
         </div>
 
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

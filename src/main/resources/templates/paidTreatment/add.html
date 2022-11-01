@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Добавление нового чека</title>
+    <title>Добавление новой плтаной услуги</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -34,7 +34,7 @@
                     name="author">
                 <option th:each="typeTrea : ${typeTreatments}"
                         th:value="${typeTrea.id}"
-                        th:text="${typeTrea.name+}">
+                        th:text="${typeTrea.name}">
                 </option>
             </select>
         </div>
@@ -48,15 +48,15 @@
         </div>
 
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Дата</label>
-            <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-            <input th:field="*{date}"
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата проведения</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date_of_event')}" th:errors="*{date_of_event}"></div>
+            <input th:field="*{date_of_event}"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   type="date" name="release_date" placeholder="Выберите дату">
+                   type="date" name="release_date" placeholder="Выберите дату проведения">
         </div>
 
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Добавить чек
+                type="submit">Добавить платную услугу
         </button>
     </form>
 </div>

@@ -4,6 +4,7 @@ package com.example.demo.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
@@ -28,7 +29,7 @@ public class PaidTreatment {
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @PastOrPresent
+    @FutureOrPresent
     public Date date_of_event;
 
     public Long getId() {

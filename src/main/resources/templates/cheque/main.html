@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="ru">
+<head>
+    <title>Чеки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<h1>Все Чеки</h1>
+<a class="underline text-blue-600" href="/cheque/add">Добавить чек</a>
+<div th:each="cheque : ${cheques}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${cheque.application.client.name+' | '+cheque.application.application_date}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600"  th:href="'/cheque/edit/'+${cheque.id}">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/cheque/show/'+${cheque.id}">Посмореть</a>
+            <a class="underline text-blue-600"  th:href="'/cheque/del/'+${cheque.id}">Удалить</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

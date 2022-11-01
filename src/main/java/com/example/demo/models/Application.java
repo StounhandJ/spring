@@ -8,7 +8,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Application {
@@ -40,6 +42,9 @@ public class Application {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     public User attending_doctor;
+
+    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<PaidTreatment> paidTreatments = new ArrayList<>();
 
     public Long getId() {
         return id;

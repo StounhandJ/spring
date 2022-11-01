@@ -10,16 +10,16 @@
 <div th:insert="header">...</div>
 
 <h1>Все Чеки</h1>
-<a class="underline text-blue-600" href="/cheque/add" sec:authorize="hasAnyAuthority('ADMIN')">Добавить чек</a>
+<a class="underline text-blue-600" href="/cheque/add" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Добавить чек</a>
 <div th:each="cheque : ${cheques}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2" th:text="${cheque.application.client.name+' | '+cheque.application.application_date}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <a class="underline text-blue-600"  th:href="'/cheque/edit/'+${cheque.id}" sec:authorize="hasAnyAuthority('ADMIN')">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/cheque/edit/'+${cheque.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/cheque/show/'+${cheque.id}">Посмореть</a>
-            <a class="underline text-blue-600"  th:href="'/cheque/del/'+${cheque.id}" sec:authorize="hasAnyAuthority('ADMIN')">Удалить</a>
+            <a class="underline text-blue-600"  th:href="'/cheque/del/'+${cheque.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Удалить</a>
         </div>
     </div>
 </div>

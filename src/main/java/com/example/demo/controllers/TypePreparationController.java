@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("typePreparation")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class TypePreparationController {
     @Autowired
     private TypePreparationRepository typePreparationRepository;
@@ -28,13 +29,11 @@ public class TypePreparationController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String typePreparationAdd(TypePreparation typePreparation) {
         return "typePreparation/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String typePreparationPostAdd(
             @ModelAttribute("typePreparation") @Valid TypePreparation typePreparation,
             BindingResult bindingResult
@@ -47,13 +46,11 @@ public class TypePreparationController {
     }
 
     @GetMapping("/edit/{typePreparation}")
-    @PreAuthorize("isAuthenticated()")
     public String typePreparationEdit(TypePreparation typePreparation) {
         return "typePreparation/edit";
     }
 
     @PostMapping("/edit/{typePreparation}")
-    @PreAuthorize("isAuthenticated()")
     public String typePreparationPostEdit(
             @ModelAttribute("typePreparation") @Valid TypePreparation typePreparation,
             BindingResult bindingResult
@@ -72,7 +69,6 @@ public class TypePreparationController {
     }
 
     @GetMapping("/del/{typePreparation}")
-    @PreAuthorize("isAuthenticated()")
     public String typePreparationDel(
             TypePreparation typePreparation) {
         typePreparationRepository.delete(typePreparation);

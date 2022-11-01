@@ -11,9 +11,10 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="${client.user.name}"/>
-        <div class="font-bold text-xl mb-2" th:text="${client.date_of_attachment}"/>
-        <div class="font-bold text-xl mb-2" th:text="${client.date_detachments}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Логин пользователя: '+${client.user.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'ФИО: '+${client.user.surname}+' '+${client.user.name}+' '+${client.user.patronymic}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата прикрипления: '+${client.date_of_attachment}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата открепления: '+${client.date_detachments}"/>
     </div>
 </div>
 </body>

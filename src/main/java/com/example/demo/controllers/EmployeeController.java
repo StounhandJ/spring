@@ -19,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("employee")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'HR')")
 public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -34,7 +35,6 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String employeeAdd(Employee employee, Model model) {
         List<User> users =  userRepository.findActive();
         model.addAttribute("users", userRepository.findActive());
@@ -42,7 +42,6 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String employeePostAdd(
             @ModelAttribute("employee") @Valid Employee employee,
             BindingResult bindingResult,
@@ -57,14 +56,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit/{employee}")
-    @PreAuthorize("isAuthenticated()")
     public String employeeEdit(Employee employee, Model model) {
         model.addAttribute("users", userRepository.findActive());
         return "employee/edit";
     }
 
     @PostMapping("/edit/{employee}")
-    @PreAuthorize("isAuthenticated()")
     public String employeePostEdit(
             @ModelAttribute("employee") @Valid Employee employee,
             BindingResult bindingResult,
@@ -80,12 +77,12 @@ public class EmployeeController {
 
     @GetMapping("/show/{employee}")
     public String employeeShow(
-            Employee employee) {
+            Employee employee, Model model) {
+        model.addAttribute("employee", employee);
         return "employee/show";
     }
 
     @GetMapping("/del/{employee}")
-    @PreAuthorize("isAuthenticated()")
     public String employeeDel(
             Employee employee) {
         employeeRepository.delete(employee);

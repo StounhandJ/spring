@@ -12,6 +12,7 @@
 
 <h1>Все Стелажи</h1>
 <a class="underline text-blue-600" href="/shelving/add" sec:authorize="isAuthenticated()">Добавить стеллаж</a>
+<a class="underline text-blue-600"  href="/shelving/filter">Поиск стеллажа</a>
 <div th:each="shelving : ${shelvings}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

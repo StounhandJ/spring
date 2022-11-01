@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @RequestMapping("application")
-@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'CLIENT')")
 public class ApplicationController {
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -44,7 +47,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String applicationAdd(Application application, Model model) {
         model.addAttribute("clients", userRepository.findByRoles(Role.CLIENT));
         model.addAttribute("doctors", userRepository.findByRoles(Role.DOCTOR));
@@ -52,7 +55,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String applicationPostAdd(
             @ModelAttribute("application") @Valid Application application,
             BindingResult bindingResult,
@@ -68,7 +71,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/edit/{application}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String applicationEdit(Application application, Model model) {
         model.addAttribute("clients", userRepository.findByRoles(Role.CLIENT));
         model.addAttribute("doctors", userRepository.findByRoles(Role.DOCTOR));
@@ -77,7 +80,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/edit/{application}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String applicationPostEdit(
             @ModelAttribute("application") @Valid Application application,
             BindingResult bindingResult,
@@ -101,7 +104,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/del/{application}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String applicationDel(
             Application application) {
         applicationRepository.delete(application);

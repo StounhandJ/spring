@@ -19,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("client")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
@@ -34,7 +35,6 @@ public class ClientController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String clientAdd(Client client, Model model) {
         List<User> users =  userRepository.findActive();
         model.addAttribute("users", userRepository.findActive());
@@ -42,7 +42,6 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String clientPostAdd(
             @ModelAttribute("client") @Valid Client client,
             BindingResult bindingResult,
@@ -57,14 +56,12 @@ public class ClientController {
     }
 
     @GetMapping("/edit/{client}")
-    @PreAuthorize("isAuthenticated()")
     public String clientEdit(Client client, Model model) {
         model.addAttribute("users", userRepository.findActive());
         return "client/edit";
     }
 
     @PostMapping("/edit/{client}")
-    @PreAuthorize("isAuthenticated()")
     public String clientPostEdit(
             @ModelAttribute("client") @Valid Client client,
             BindingResult bindingResult,
@@ -85,7 +82,6 @@ public class ClientController {
     }
 
     @GetMapping("/del/{client}")
-    @PreAuthorize("isAuthenticated()")
     public String clientDel(
             Client client) {
         clientRepository.delete(client);

@@ -17,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("cancellation")
+@PreAuthorize("hasAnyAuthority('STOREKEEPER')")
 public class CancellationController {
     @Autowired
     private CancellationRepository cancellationRepository;
@@ -32,14 +33,12 @@ public class CancellationController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String cancellationAdd(Cancellation cancellation, Model model) {
         model.addAttribute("medicalPreparations", medicalPreparationsRepository.findAll());
         return "cancellation/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String cancellationPostAdd(
             @ModelAttribute("cancellation") @Valid Cancellation cancellation,
             BindingResult bindingResult,
@@ -54,14 +53,12 @@ public class CancellationController {
     }
 
     @GetMapping("/edit/{cancellation}")
-    @PreAuthorize("isAuthenticated()")
     public String cancellationEdit(Cancellation cancellation, Model model) {
         model.addAttribute("medicalPreparations", medicalPreparationsRepository.findAll());
         return "cancellation/edit";
     }
 
     @PostMapping("/edit/{cancellation}")
-    @PreAuthorize("isAuthenticated()")
     public String cancellationPostEdit(
             @ModelAttribute("cancellation") @Valid Cancellation cancellation,
             BindingResult bindingResult,
@@ -82,7 +79,6 @@ public class CancellationController {
     }
 
     @GetMapping("/del/{cancellation}")
-    @PreAuthorize("isAuthenticated()")
     public String cancellationDel(
             Cancellation cancellation) {
         cancellationRepository.delete(cancellation);

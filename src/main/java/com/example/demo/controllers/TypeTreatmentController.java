@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("typeTreatment")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class TypeTreatmentController {
     @Autowired
     private TypeTreatmentRepository typeTreatmentRepository;
@@ -28,13 +29,11 @@ public class TypeTreatmentController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String typeTreatmentAdd(TypeTreatment typeTreatment) {
         return "typeTreatment/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String typeTreatmentPostAdd(
             @ModelAttribute("typeTreatment") @Valid TypeTreatment typeTreatment,
             BindingResult bindingResult
@@ -47,13 +46,11 @@ public class TypeTreatmentController {
     }
 
     @GetMapping("/edit/{typeTreatment}")
-    @PreAuthorize("isAuthenticated()")
     public String typeTreatmentEdit(TypeTreatment typeTreatment) {
         return "typeTreatment/edit";
     }
 
     @PostMapping("/edit/{typeTreatment}")
-    @PreAuthorize("isAuthenticated()")
     public String typeTreatmentPostEdit(
             @ModelAttribute("typeTreatment") @Valid TypeTreatment typeTreatment,
             BindingResult bindingResult
@@ -72,7 +69,6 @@ public class TypeTreatmentController {
     }
 
     @GetMapping("/del/{typeTreatment}")
-    @PreAuthorize("isAuthenticated()")
     public String typeTreatmentDel(
             TypeTreatment typeTreatment) {
         typeTreatmentRepository.delete(typeTreatment);

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("warehouse")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class WarehouseController {
     @Autowired
     private WarehouseRepository warehouseRepository;
@@ -28,13 +29,11 @@ public class WarehouseController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String warehouseAdd(Warehouse warehouse) {
         return "warehouse/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String warehousePostAdd(
             @ModelAttribute("warehouse") @Valid Warehouse warehouse,
             BindingResult bindingResult
@@ -47,13 +46,11 @@ public class WarehouseController {
     }
 
     @GetMapping("/edit/{warehouse}")
-    @PreAuthorize("isAuthenticated()")
     public String warehouseEdit(Warehouse warehouse) {
         return "warehouse/edit";
     }
 
     @PostMapping("/edit/{warehouse}")
-    @PreAuthorize("isAuthenticated()")
     public String warehousePostEdit(
             @ModelAttribute("warehouse") @Valid Warehouse warehouse,
             BindingResult bindingResult
@@ -72,7 +69,6 @@ public class WarehouseController {
     }
 
     @GetMapping("/del/{warehouse}")
-    @PreAuthorize("isAuthenticated()")
     public String warehouseDel(
             Warehouse warehouse) {
         warehouseRepository.delete(warehouse);

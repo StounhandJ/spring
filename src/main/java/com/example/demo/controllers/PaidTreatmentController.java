@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("paidTreatment")
-@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'CLIENT')")
 public class PaidTreatmentController {
     @Autowired
     private PaidTreatmentRepository paidTreatmentRepository;
@@ -52,7 +52,7 @@ public class PaidTreatmentController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String paidTreatmentAdd(PaidTreatment paidTreatment, Model model) {
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
@@ -60,7 +60,7 @@ public class PaidTreatmentController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String paidTreatmentPostAdd(
             @ModelAttribute("paidTreatment") @Valid PaidTreatment paidTreatment,
             BindingResult bindingResult,
@@ -76,7 +76,7 @@ public class PaidTreatmentController {
     }
 
     @GetMapping("/edit/{paidTreatment}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String paidTreatmentEdit(PaidTreatment paidTreatment, Model model) {
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
@@ -84,7 +84,7 @@ public class PaidTreatmentController {
     }
 
     @PostMapping("/edit/{paidTreatment}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String paidTreatmentPostEdit(
             @ModelAttribute("paidTreatment") @Valid PaidTreatment paidTreatment,
             BindingResult bindingResult,
@@ -107,7 +107,7 @@ public class PaidTreatmentController {
     }
 
     @GetMapping("/del/{paidTreatment}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String paidTreatmentDel(
             PaidTreatment paidTreatment) {
         paidTreatmentRepository.delete(paidTreatment);

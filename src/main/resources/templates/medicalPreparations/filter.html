@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="ru">
+<head>
+    <title>Мед.препараты</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<h2>Фильтрация</h2>
+<div class="w-full max-w-xs">
+    <form method="get" th:action="${'/medicalPreparations/filter'}">
+        <label>
+            <input type="text" name="title" th:value="${title}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </label>
+
+        <button type="submit"
+                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        >Найти</button>
+
+        <label>
+            Точный поиск:
+            <input type="checkbox" name="accurate_search" placeholder="Точный поиск" th:checked="${accurate_search}"
+                   class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        </label>
+
+    </form>
+</div>
+
+<div th:each="medicalPreparations : ${result}">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2" th:text="${medicalPreparations.name}"/>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/edit/'+${medicalPreparations.id}" sec:authorize="isAuthenticated()">Редактировать</a>
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/show/'+${medicalPreparations.id}">Посмореть</a>
+            <a class="underline text-blue-600"  th:href="'/medicalPreparations/del/'+${medicalPreparations.id}" sec:authorize="isAuthenticated()">Удалить</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

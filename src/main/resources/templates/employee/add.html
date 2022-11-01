@@ -20,7 +20,7 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="author">
                 <option th:each="user : ${users}"
-                        th:if="${(employee.user != null && user.id.equals(employee.user.id)) || (user.employee==null && user.client==null)}"
+                        th:if="${user.active && ((employee.user != null && user.id.equals(employee.user.id)) || (user.employee==null && user.client==null))}"
                         th:value="${user.id}"
                         th:text="${user.name + ' | ' + user.birthdate}">
                 </option>

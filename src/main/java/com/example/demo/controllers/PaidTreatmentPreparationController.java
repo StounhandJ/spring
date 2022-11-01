@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("paidTreatmentPreparation")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
 public class PaidTreatmentPreparationController {
 
     @Autowired

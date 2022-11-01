@@ -11,6 +11,7 @@
 
 <h1>Все Мед.Препараты</h1>
 <a class="underline text-blue-600" href="/medicalPreparations/add" sec:authorize="isAuthenticated()">Добавить мед.препарат</a>
+<a class="underline text-blue-600"  href="/medicalPreparations/filter">Поиск Мед.препарата</a>
 <div th:each="medicalPreparations : ${medicalPreparationss}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

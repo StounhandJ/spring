@@ -17,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("entrance")
+@PreAuthorize("hasAnyAuthority('STOREKEEPER')")
 public class EntranceController {
     @Autowired
     private EntranceRepository entranceRepository;
@@ -32,14 +33,12 @@ public class EntranceController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String entranceAdd(Entrance entrance, Model model) {
         model.addAttribute("medicalPreparations", medicalPreparationsRepository.findAll());
         return "entrance/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String entrancePostAdd(
             @ModelAttribute("entrance") @Valid Entrance entrance,
             BindingResult bindingResult,
@@ -54,14 +53,12 @@ public class EntranceController {
     }
 
     @GetMapping("/edit/{entrance}")
-    @PreAuthorize("isAuthenticated()")
     public String entranceEdit(Entrance entrance, Model model) {
         model.addAttribute("medicalPreparations", medicalPreparationsRepository.findAll());
         return "entrance/edit";
     }
 
     @PostMapping("/edit/{entrance}")
-    @PreAuthorize("isAuthenticated()")
     public String entrancePostEdit(
             @ModelAttribute("entrance") @Valid Entrance entrance,
             BindingResult bindingResult,
@@ -82,7 +79,6 @@ public class EntranceController {
     }
 
     @GetMapping("/del/{entrance}")
-    @PreAuthorize("isAuthenticated()")
     public String entranceDel(
             Entrance entrance) {
         entranceRepository.delete(entrance);

@@ -8,15 +8,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("shelving")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class ShelvingController {
     @Autowired
     private ShelvingRepository shelvingRepository;
@@ -32,14 +31,12 @@ public class ShelvingController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String shelvingAdd(Shelving shelving, Model model) {
         model.addAttribute("warehouses", warehouseRepository.findAll());
         return "shelving/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
     public String shelvingPostAdd(
             @ModelAttribute("shelving") @Valid Shelving shelving,
             BindingResult bindingResult,
@@ -54,14 +51,12 @@ public class ShelvingController {
     }
 
     @GetMapping("/edit/{shelving}")
-    @PreAuthorize("isAuthenticated()")
     public String shelvingEdit(Shelving shelving, Model model) {
         model.addAttribute("warehouses", warehouseRepository.findAll());
         return "shelving/edit";
     }
 
     @PostMapping("/edit/{shelving}")
-    @PreAuthorize("isAuthenticated()")
     public String shelvingPostEdit(
             @ModelAttribute("shelving") @Valid Shelving shelving,
             BindingResult bindingResult,
@@ -82,10 +77,22 @@ public class ShelvingController {
     }
 
     @GetMapping("/del/{shelving}")
-    @PreAuthorize("isAuthenticated()")
     public String shelvingDel(
             Shelving shelving) {
         shelvingRepository.delete(shelving);
         return "redirect:../";
+    }
+
+    @GetMapping("/filter")
+    public String bookFilter(@RequestParam(defaultValue = "") String title,
+                             @RequestParam(required = false) boolean accurate_search,
+                             Model model) {
+        if (!title.equals("")) {
+            List<Shelving> result = accurate_search ? shelvingRepository.findByName(title) : shelvingRepository.findByNameContains(title);
+            model.addAttribute("result", result);
+        }
+        model.addAttribute("title", title);
+        model.addAttribute("accurate_search", accurate_search);
+        return "shelving/filter";
     }
 }

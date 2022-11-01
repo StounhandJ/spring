@@ -9,12 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("medicalPreparations")
@@ -29,6 +27,7 @@ public class MedicalPreparationsController {
     private TypePreparationRepository typePreparationRepository;
 
     @GetMapping()
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsMain(Model model) {
         model.addAttribute("medicalPreparationss", medicalPreparationsRepository.findAll());
         model.addAttribute("shelving", shelvingRepository.findAll());
@@ -37,7 +36,7 @@ public class MedicalPreparationsController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsAdd(MedicalPreparations medicalPreparations, Model model) {
         model.addAttribute("shelving", shelvingRepository.findAll());
         model.addAttribute("typePreparations", typePreparationRepository.findAll());
@@ -45,7 +44,7 @@ public class MedicalPreparationsController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsPostAdd(
             @ModelAttribute("medicalPreparations") @Valid MedicalPreparations medicalPreparations,
             BindingResult bindingResult,
@@ -61,7 +60,7 @@ public class MedicalPreparationsController {
     }
 
     @GetMapping("/edit/{medicalPreparations}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsEdit(MedicalPreparations medicalPreparations, Model model) {
         model.addAttribute("shelving", shelvingRepository.findAll());
         model.addAttribute("typePreparations", typePreparationRepository.findAll());
@@ -69,7 +68,7 @@ public class MedicalPreparationsController {
     }
 
     @PostMapping("/edit/{medicalPreparations}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsPostEdit(
             @ModelAttribute("medicalPreparations") @Valid MedicalPreparations medicalPreparations,
             BindingResult bindingResult,
@@ -91,10 +90,23 @@ public class MedicalPreparationsController {
     }
 
     @GetMapping("/del/{medicalPreparations}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyAuthority('STOREKEEPER')")
     public String medicalPreparationsDel(
             MedicalPreparations medicalPreparations) {
         medicalPreparationsRepository.delete(medicalPreparations);
         return "redirect:../";
+    }
+
+    @GetMapping("/filter")
+    public String bookFilter(@RequestParam(defaultValue = "") String title,
+                             @RequestParam(required = false) boolean accurate_search,
+                             Model model) {
+        if (!title.equals("")) {
+            List<MedicalPreparations> result = accurate_search ? medicalPreparationsRepository.findByName(title) : medicalPreparationsRepository.findByNameContains(title);
+            model.addAttribute("result", result);
+        }
+        model.addAttribute("title", title);
+        model.addAttribute("accurate_search", accurate_search);
+        return "medicalPreparations/filter";
     }
 }

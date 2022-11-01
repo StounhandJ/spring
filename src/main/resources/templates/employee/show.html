@@ -11,10 +11,11 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="${employee.user.name}"/>
-        <div class="font-bold text-xl mb-2" th:text="${employee.salary}"/>
-        <div class="font-bold text-xl mb-2" th:text="${employee.date_of_employment}"/>
-        <div class="font-bold text-xl mb-2" th:text="${employee.date_of_dismissal}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Логин пользователя: '+${employee.user.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'ФИО: '+${employee.user.surname}+' '+${employee.user.name}+' '+${employee.user.patronymic}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Зарплата: '+${employee.salary}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата найма: '+${employee.date_of_employment}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата увольнения: '+${employee.date_of_dismissal}"/>
     </div>
 </div>
 </body>

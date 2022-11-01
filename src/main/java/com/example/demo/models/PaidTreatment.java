@@ -6,8 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class PaidTreatment {
@@ -31,6 +31,9 @@ public class PaidTreatment {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @FutureOrPresent
     public Date date_of_event;
+
+    @OneToMany(mappedBy = "paidTreatment")
+    Set<PaidTreatmentPreparation> medicalPreparations;
 
     public Long getId() {
         return id;
@@ -70,5 +73,13 @@ public class PaidTreatment {
 
     public void setDate_of_event(Date date_of_event) {
         this.date_of_event = date_of_event;
+    }
+
+    public Set<PaidTreatmentPreparation> getMedicalPreparations() {
+        return medicalPreparations;
+    }
+
+    public void setMedicalPreparations(Set<PaidTreatmentPreparation> medicalPreparations) {
+        this.medicalPreparations = medicalPreparations;
     }
 }

@@ -1,9 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.PaidTreatment;
-import com.example.demo.repo.ApplicationRepository;
-import com.example.demo.repo.PaidTreatmentRepository;
-import com.example.demo.repo.TypeTreatmentRepository;
+import com.example.demo.models.PaidTreatmentPreparation;
+import com.example.demo.models.keys.PaidTreatmentPreparationKey;
+import com.example.demo.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,6 @@ public class PaidTreatmentController {
 
     @Autowired
     private TypeTreatmentRepository typeTreatmentRepository;
-
 
     @GetMapping()
     public String paidTreatmentMain(Model model) {

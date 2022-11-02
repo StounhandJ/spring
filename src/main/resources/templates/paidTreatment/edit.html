@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
     <title th:value="${'Редактирование платной услуги '+paidTreatment.application.application_date}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -54,6 +54,14 @@
                    type="date" name="release_date" placeholder="Выберите дату проведения">
         </div>
 
+        <div th:each="medicalPreparation : ${paidTreatment.medicalPreparations}">
+            <div class="font-bold text-xl"><label th:text="'• '"/>
+                <label th:text="${medicalPreparation.medicalPreparation.name+' '+medicalPreparation.count+'шт.'}"/>
+                <a class="underline text-blue-600"  th:text="Удалить" th:href="'/paidTreatmentPreparation/del?medicalPreparation='+${medicalPreparation.medicalPreparation.id}+'&count='+${medicalPreparation.count}+'&redirect=/paidTreatment/edit/'+${paidTreatment.id}"/>
+            </div>
+        </div>
+
+        <a class="underline text-blue-600"  th:href="'/paidTreatmentPreparation/add/'+${paidTreatment.id}+'?redirect=/paidTreatment/edit/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Добавить/Изменить мед.препарат</a>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit">Сохранить
         </button>

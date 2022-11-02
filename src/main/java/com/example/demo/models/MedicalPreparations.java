@@ -30,6 +30,12 @@ public class MedicalPreparations {
     @OneToMany(mappedBy = "medicalPreparations", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Cancellation> cancellations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "medicalPreparations", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Entrance> entrance = new ArrayList<>();
+
+    @OneToMany(mappedBy = "medicalPreparation", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<PaidTreatmentPreparation> paidTreatmentPreparation = new ArrayList<>();
+
     public String getName() {
         return name;
     }

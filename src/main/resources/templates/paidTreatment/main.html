@@ -17,7 +17,6 @@
             <div class="font-bold text-xl mb-2" th:text="${paidTreatment.typeTreatment.name+' | '+paidTreatment.application.client.name+' | '+paidTreatment.application.application_date}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <a class="underline text-blue-600"  th:href="'/paidTreatmentPreparation/add/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Добавить мед.препарат</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/edit/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/show/'+${paidTreatment.id}">Посмореть</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/del/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Удалить</a>

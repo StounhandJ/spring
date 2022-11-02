@@ -11,12 +11,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("paidTreatmentPreparation")
@@ -33,32 +31,40 @@ public class PaidTreatmentPreparationController {
     private MedicalPreparationsRepository medicalPreparationsRepository;
 
     @GetMapping("/add/{paidTreatment}")
-    public String paidTreatmentAdd(PaidTreatmentPreparation paidTreatmentPreparation, PaidTreatment paidTreatment, Model model) {
+    public String paidTreatmentAdd(PaidTreatmentPreparation paidTreatmentPreparation, PaidTreatment paidTreatment, Model model, @RequestParam("redirect") String redirect) {
         var g = new PaidTreatmentPreparationKey();
         g.setPaidTreatmentId(paidTreatment.id);
         paidTreatmentPreparation.setId(g);
 
         model.addAttribute("medicalPreparations", medicalPreparationsRepository.findAll());
         model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
+        model.addAttribute("redirect", redirect);
         return "paidTreatmentPreparation/add";
     }
 
     @PostMapping("/add")
     public String paidTreatmentPostAdd(
             @ModelAttribute("paidTreatmentPreparation") @Valid PaidTreatmentPreparation paidTreatmentPreparation,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            @RequestParam("redirect") String redirect
     ) {
         if (bindingResult.hasErrors()) {
             return "paidTreatmentPreparation/add";
         }
         paidTreatmentPreparationRepository.save(paidTreatmentPreparation);
-        return "redirect:/paidTreatment";
+        return "redirect:"+redirect;
     }
 
     @GetMapping("/del")
     public String paidTreatmentDel(
-            PaidTreatmentPreparation paidTreatmentPreparation) {
-        paidTreatmentPreparationRepository.delete(paidTreatmentPreparation);
-        return "redirect:../";
+            @RequestParam("medicalPreparation") String medicalPreparation,
+            @RequestParam("count") String count,
+            @RequestParam("redirect") String redirect
+    ) {
+        var mp = medicalPreparationsRepository.findById(Long.parseLong(medicalPreparation, 10)).get();
+        var paidTreatmentPreparations = paidTreatmentPreparationRepository.findByMedicalPreparationAndCount(mp, Integer.parseInt(count));
+
+        paidTreatmentPreparationRepository.deleteAll(paidTreatmentPreparations);
+        return "redirect:"+redirect;
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Добавление нового списания</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div class="w-full max-w-xs">
+    <form th:action="${'/cancellation/addMed/'+cancellation.medicalPreparations.id+'?redirect='+redirect}" method="post" th:object="${cancellation}"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+        <input th:field="*{medicalPreparations}" type="hidden">
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Количество</label>
+            <div style="color: red" th:if="${#fields.hasErrors('count')}" th:errors="*{count}"></div>
+            <input th:field="*{count}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="number" step="0.1" name="price" placeholder="Количество">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Дата списания</label>
+            <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+            <input th:field="*{date}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="date" name="release_date" placeholder="Выберите дату списания">
+        </div>
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">Добавить списание
+        </button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Entrance;
+import com.example.demo.models.MedicalPreparations;
 import com.example.demo.repo.EntranceRepository;
 import com.example.demo.repo.MedicalPreparationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,6 +48,30 @@ public class EntranceController {
         }
         entranceRepository.save(entrance);
         return "redirect:";
+    }
+
+    @GetMapping("/addMed/{medicalPreparations}")
+    public String entranceAddMed(Entrance entrance, MedicalPreparations medicalPreparations, Model model, @RequestParam("redirect") String redirect) {
+        entrance.setMedicalPreparations(medicalPreparations);
+        model.addAttribute("redirect", redirect);
+        return "entrance/addMed";
+    }
+
+    @PostMapping("/addMed/{medicalPreparations}")
+    public String entrancePostAddMed(
+            @ModelAttribute("entrance") @Valid Entrance entrance,
+            BindingResult bindingResult,
+            MedicalPreparations medicalPreparations,
+            Model model,
+            @RequestParam("redirect") String redirect
+    ) {
+        if (bindingResult.hasErrors()) {
+            entrance.setMedicalPreparations(medicalPreparations);
+            model.addAttribute("redirect", redirect);
+            return "entrance/addMed";
+        }
+        entranceRepository.save(entrance);
+        return "redirect:"+redirect;
     }
 
     @GetMapping("/edit/{entrance}")

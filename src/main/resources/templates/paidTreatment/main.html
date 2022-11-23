@@ -12,7 +12,7 @@
 <h1>Все Платные услуги</h1>
 <a class="underline text-blue-600" href="/paidTreatment/add"  sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Добавить платную услугу</a>
 <div th:each="paidTreatment : ${paidTreatments}">
-    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <div th:class="${'max-w-sm rounded overflow-hidden shadow-lg '+(paidTreatment.IsFullyPaid()?'':'bg-red-400')}">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2" th:text="${paidTreatment.typeTreatment.name+' | '+paidTreatment.application.client.name+' | '+paidTreatment.application.application_date}"/>
         </div>
@@ -20,6 +20,9 @@
             <a class="underline text-blue-600"  th:href="'/paidTreatment/edit/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Редактировать</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/show/'+${paidTreatment.id}">Посмореть</a>
             <a class="underline text-blue-600"  th:href="'/paidTreatment/del/'+${paidTreatment.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Удалить</a>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <a class="underline text-blue-600" th:href="'/cheque/add/'+${paidTreatment.id}+'?redirect=/paidTreatment'">Добавить чек</a>
         </div>
     </div>
 </div>

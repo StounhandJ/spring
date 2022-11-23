@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title th:value="${cheque.application.application_date}"></title>
+    <title th:text="${ cheque.paidTreatment.typeTreatment.name + ' | ' + cheque.paidTreatment.date_of_event}"></title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
@@ -11,12 +11,12 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2" th:text="'Клиент: '+${cheque.application.client.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Клиент: '+${cheque.paidTreatment.application.client.login}"/>
         <div class="font-bold text-xl mb-2" th:text="'Сумма оплаты: '+${cheque.amount}"/>
         <div class="font-bold text-xl mb-2" th:text="'Дата оплаты: '+${cheque.date}"/>
         <div class="font-bold text-xl mb-2">
-            <label th:text="'Заявка: '"/>
-            <a class="underline text-blue-600"  th:href="'/application/show/'+${cheque.application.id}">Просмотреть</a>
+            <label th:text="'Платная услуга: '"/>
+            <a class="underline text-blue-600"  th:href="'/paidTreatment/show/'+${cheque.paidTreatment.id}">Просмотреть</a>
         </div>
     </div>
 </div>

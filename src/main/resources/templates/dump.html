@@ -10,9 +10,12 @@
 <div th:insert="header">...</div>
 <form id="uploadbanner" enctype="multipart/form-data" method="post" action="/dump/upload">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-    <input name="file" type="file"/>
-    <input type="submit" value="submit" id="submit"/>
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+           name="file" id="file_input" type="file">
+    <input class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" type="submit" value="Отправить востановление" id="submit"/>
 </form>
-<a th:href="${'/dump/download'}" th:text="Скачать дамп"/>
+<a class="underline text-blue-600"
+   th:href="${'/dump/download'}" th:text="${'Скачать дамп'}"/>
 </body>
 </html>

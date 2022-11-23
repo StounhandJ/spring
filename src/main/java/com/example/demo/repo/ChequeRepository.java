@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ChequeRepository extends CrudRepository<Cheque, Long> {
 
-    List<Cheque> findByApplicationClient_Id(long id);
+    List<Cheque> findByPaidTreatmentApplicationClient_Id(long id);
 
 }

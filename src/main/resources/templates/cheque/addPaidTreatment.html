@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title th:text="${'Редактирование чека ' + cheque.paidTreatment.typeTreatment.name + ' | ' + cheque.paidTreatment.date_of_event}"></title>
+    <title>Добавление нового чека</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -10,20 +10,10 @@
 <div th:insert="header">...</div>
 
 <div class="w-full max-w-xs">
-    <form th:action="${'/cheque/edit/'+cheque.id}" th:object="${cheque}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form th:action="${'/cheque/add/'+cheque.paidTreatment.id+'?redirect='+redirect}" method="post" th:object="${cheque}"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Заявка</label>
-            <div style="color: red" th:if="${#fields.hasErrors('paidTreatment')}" th:errors="*{paidTreatment}"></div>
-            <select th:field="*{paidTreatment}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name="author">
-                <option th:each="appli : ${paidTreatments}"
-                        th:value="${appli.id}"
-                        th:text="${appli.application.client.name + ' | ' + appli.date_of_event + ' | ' + appli.typeTreatment.name }">
-                </option>
-            </select>
-        </div>
+        <input th:field="*{paidTreatment}" type="hidden">
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Сумма</label>
@@ -41,7 +31,7 @@
         </div>
 
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Сохранить
+                type="submit">Добавить чек
         </button>
     </form>
 </div>

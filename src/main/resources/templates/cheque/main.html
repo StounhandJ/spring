@@ -14,7 +14,7 @@
 <div th:each="cheque : ${cheques}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2" th:text="${cheque.application.client.name+' | '+cheque.application.application_date}"/>
+            <div class="font-bold text-xl mb-2" th:text="${cheque.paidTreatment.application.client.name + ' | ' + cheque.paidTreatment.date_of_event + ' | ' + cheque.paidTreatment.typeTreatment.name }"/>
         </div>
         <div class="px-6 pt-4 pb-2">
             <a class="underline text-blue-600"  th:href="'/cheque/edit/'+${cheque.id}" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Редактировать</a>

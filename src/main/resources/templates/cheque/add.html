@@ -15,13 +15,13 @@
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Заявка</label>
-            <div style="color: red" th:if="${#fields.hasErrors('application')}" th:errors="*{application}"></div>
-            <select th:field="*{application}"
+            <div style="color: red" th:if="${#fields.hasErrors('paidTreatment')}" th:errors="*{paidTreatment}"></div>
+            <select th:field="*{paidTreatment}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="author">
-                <option th:each="appli : ${applications}"
+                <option th:each="appli : ${paidTreatments}"
                         th:value="${appli.id}"
-                        th:text="${appli.client.name+' | '+appli.application_date}">
+                        th:text="${appli.application.client.name + ' | ' + appli.date_of_event + ' | ' + appli.typeTreatment.name }">
                 </option>
             </select>
         </div>

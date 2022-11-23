@@ -10,6 +10,6 @@ public class UserRoleKey implements Serializable {
     @Column(name = "user_id")
     Long userId;
 
-    @Column(name = "role")
-    String role;
+    @Column(name = "roles")
+    String roles;
 }

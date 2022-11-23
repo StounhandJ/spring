@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,6 +36,9 @@ public class PaidTreatment {
 
     @OneToMany(mappedBy = "paidTreatment")
     Set<PaidTreatmentPreparation> medicalPreparations;
+
+    @OneToMany(mappedBy = "paidTreatment", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Cheque> cheques = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -81,5 +86,14 @@ public class PaidTreatment {
 
     public void setMedicalPreparations(Set<PaidTreatmentPreparation> medicalPreparations) {
         this.medicalPreparations = medicalPreparations;
+    }
+
+    public boolean IsFullyPaid(){
+        int chequeSum = 0;
+
+        for (Cheque cheque:cheques) {
+            chequeSum+=cheque.getAmount();
+        }
+        return chequeSum>=this.amount;
     }
 }

@@ -29,7 +29,7 @@ public class Cheque {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    public Application application;
+    public PaidTreatment paidTreatment;
 
     public Long getId() {
         return id;
@@ -55,12 +55,12 @@ public class Cheque {
         this.date = date;
     }
 
-    public Application getApplication() {
-        return application;
+    public PaidTreatment getPaidTreatment() {
+        return paidTreatment;
     }
 
-    public void setApplication(Application application) {
-        this.application = application;
+    public void setPaidTreatment(PaidTreatment paidTreatment) {
+        this.paidTreatment = paidTreatment;
     }
 
     public String[] cvs() {
@@ -68,7 +68,7 @@ public class Cheque {
                 id.toString(),
                 String.valueOf(amount),
                 date.toString(),
-                application.id.toString()
+                paidTreatment.id.toString()
         };
     }
 
@@ -79,9 +79,9 @@ public class Cheque {
         LocalDate l = DateTimeFormatter.ofPattern("yyyy-M-dd hh:mm:ss.S").parse(data.get(2), LocalDate::from);
         ch.setDate(Date.from(l.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        Application ap = new Application();
-        ap.setId(Long.parseLong(data.get(3), 10));
-        ch.setApplication(ap);
+        PaidTreatment pt = new PaidTreatment();
+        pt.setId(Long.parseLong(data.get(3), 10));
+        ch.setPaidTreatment(pt);
         return ch;
     }
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>График</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+</body>
+<script>
+    const data = {
+        labels: [],
+        datasets: [
+            {
+                label: undefined,
+                data: [],
+                hidden: false,
+                fill: 'start'
+            }
+        ]
+    };
+
+
+    const ctx = document.getElementById('myChart');
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            elements: {
+                line: {
+                    tension: false
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'График заявок'
+                }
+            }
+        },
+    };
+    const chart = new Chart(ctx, config);
+
+    $.getJSON("/application/graph/data")
+        .done(function (jsonData) {
+            chart.data.labels = jsonData["dates"]
+            chart.data.datasets[0].data = jsonData["data"]
+            chart.update()
+        });
+
+</script>
+</html>

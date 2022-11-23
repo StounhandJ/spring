@@ -12,6 +12,7 @@
 
 <h1>Все заявки</h1>
 <a class="underline text-blue-600" href="/application/add" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Добавить заявку</a>
+<a class="underline text-blue-600" href="/application/graph" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">Просмотреть график</a>
 <div th:each="appli : ${applications}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

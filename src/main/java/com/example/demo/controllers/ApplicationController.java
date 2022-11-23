@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.models.Application;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
+import com.example.demo.models.json.Graphs;
 import com.example.demo.repo.ApplicationRepository;
 import com.example.demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("application")
@@ -109,5 +107,55 @@ public class ApplicationController {
             Application application) {
         applicationRepository.delete(application);
         return "redirect:../";
+    }
+
+    @GetMapping("graph")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    public String graphs() {
+        return "application/graph";
+    }
+
+    @GetMapping("graph/data")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @ResponseBody
+    public Graphs test() throws ParseException {
+        Map<String, Integer> applicationData = new HashMap<>();
+
+        for (Application application : applicationRepository.findAll()) {
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(application.application_date);
+            if (applicationData.containsKey(date)) {
+                applicationData.compute(date, (k, v) -> v + 1);
+            } else {
+                applicationData.put(date, 1);
+            }
+        }
+
+        applicationData = new TreeMap<>(applicationData);
+        if (applicationData.size() > 0) {
+            Date firstDate = new SimpleDateFormat("yyyy-MM-dd").parse(applicationData.keySet().stream().toArray()[0].toString());
+            Date lastDate = new SimpleDateFormat("yyyy-MM-dd").parse(applicationData.keySet().stream().toArray()[applicationData.size() - 1].toString());
+
+            while (firstDate.before(lastDate)) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(firstDate);
+                c.add(Calendar.DATE, 1);
+                firstDate = c.getTime();
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(firstDate);
+                if (!applicationData.containsKey(date)){
+                    applicationData.put(date, 0);
+                }
+            }
+        }
+
+        Graphs graphs = new Graphs();
+        graphs.data = new ArrayList<>();
+        graphs.dates = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : applicationData.entrySet()) {
+            graphs.data.add(entry.getValue());
+            graphs.dates.add(entry.getKey());
+        }
+
+        return graphs;
     }
 }

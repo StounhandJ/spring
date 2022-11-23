@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+<form id="uploadbanner" enctype="multipart/form-data" method="post" action="/dump/upload">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input name="file" type="file"/>
+    <input type="submit" value="submit" id="submit"/>
+</form>
+<a th:href="${'/dump/download'}" th:text="Скачать дамп"/>
+</body>
+</html>

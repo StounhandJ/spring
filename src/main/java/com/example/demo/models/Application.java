@@ -4,7 +4,6 @@ package com.example.demo.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -100,5 +99,19 @@ public class Application {
 
     public void setAttending_doctor(User attending_doctor) {
         this.attending_doctor = attending_doctor;
+    }
+
+    public String[] cvs() {
+        return new String[]{
+                id.toString(),
+                text
+        };
+    }
+
+    public static Application cvsToModel(List<String> data) {
+        Application ap = new Application();
+        ap.setId(Long.parseLong(data.get(0), 10));
+        ap.setText(data.get(1));
+        return ap;
     }
 }

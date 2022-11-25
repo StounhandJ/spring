@@ -76,11 +76,13 @@ public class DumpRestoreController {
     private WarehouseRepository warehouseRepository;
 
     @GetMapping()
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String dumpMain() {
         return "dump";
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Resource> getFile() throws IOException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 
         DumpRestoreService dumpRestoreService = getDumpRestoreService();
@@ -100,6 +102,7 @@ public class DumpRestoreController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String upload(@RequestParam("file") MultipartFile file) throws IOException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         File convFile = new File("temp/" + Objects.requireNonNull(file.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(convFile);

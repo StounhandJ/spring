@@ -11,6 +11,7 @@
 
 <h1>Все Чеки</h1>
 <a class="underline text-blue-600" href="/cheque/add" sec:authorize="hasAnyAuthority('ADMIN', 'ACCOUNTANT')">Добавить чек</a>
+<a class="underline text-blue-600" href="/document/cheque/excel" sec:authorize="hasAnyAuthority('ADMIN', 'ACCOUNTANT')">Генерация отчёта</a>
 <div th:each="cheque : ${cheques}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">

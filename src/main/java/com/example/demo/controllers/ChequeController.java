@@ -80,8 +80,8 @@ public class ChequeController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public String chequePostAddPaidTreatment(
             @ModelAttribute("cheque") @Valid Cheque cheque,
-            PaidTreatment paidTreatment,
             BindingResult bindingResult,
+            PaidTreatment paidTreatment,
             Model model,
             @RequestParam("redirect") String redirect
     ) {

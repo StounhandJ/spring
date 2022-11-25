@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("cheque")
-@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT', 'DOCTOR')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT', 'ACCOUNTANT')")
 public class ChequeController {
     @Autowired
     private ChequeRepository chequeRepository;
@@ -47,14 +47,14 @@ public class ChequeController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequeAdd(Cheque cheque, Model model) {
         model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         return "cheque/add";
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequePostAdd(
             @ModelAttribute("cheque") @Valid Cheque cheque,
             BindingResult bindingResult,
@@ -69,7 +69,7 @@ public class ChequeController {
     }
 
     @GetMapping("/add/{paidTreatment}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequeAddPaidTreatment(Cheque cheque, PaidTreatment paidTreatment, Model model, @RequestParam("redirect") String redirect) {
         cheque.setPaidTreatment(paidTreatment);
         model.addAttribute("redirect", redirect);
@@ -77,7 +77,7 @@ public class ChequeController {
     }
 
     @PostMapping("/add/{paidTreatment}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequePostAddPaidTreatment(
             @ModelAttribute("cheque") @Valid Cheque cheque,
             BindingResult bindingResult,
@@ -95,14 +95,14 @@ public class ChequeController {
     }
 
     @GetMapping("/edit/{cheque}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequeEdit(Cheque cheque, Model model) {
         model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         return "cheque/edit";
     }
 
     @PostMapping("/edit/{cheque}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequePostEdit(
             @ModelAttribute("cheque") @Valid Cheque cheque,
             BindingResult bindingResult,
@@ -124,7 +124,7 @@ public class ChequeController {
     }
 
     @GetMapping("/del/{cheque}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
     public String chequeDel(
             Cheque cheque) {
         chequeRepository.delete(cheque);

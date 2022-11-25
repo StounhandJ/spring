@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 @Controller
 @RequestMapping("paidTreatmentPreparation")
-@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT')")
 public class PaidTreatmentPreparationController {
 
     @Autowired

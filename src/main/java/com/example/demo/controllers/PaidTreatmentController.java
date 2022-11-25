@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("paidTreatment")
-@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'CLIENT')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'CLIENT', 'ACCOUNTANT')")
 public class PaidTreatmentController {
     @Autowired
     private PaidTreatmentRepository paidTreatmentRepository;

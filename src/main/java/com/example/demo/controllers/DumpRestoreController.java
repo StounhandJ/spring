@@ -1,8 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.repo.*;
 import com.example.demo.service.DumpRestoreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -15,14 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 
 @Controller
@@ -30,50 +24,6 @@ import java.util.Objects;
 @PreAuthorize("hasAnyAuthority('ADMIN')")
 public class DumpRestoreController {
 
-    @Autowired
-    private ApplicationRepository applicationRepository;
-
-    @Autowired
-    private CancellationRepository cancellationRepository;
-
-    @Autowired
-    private ChequeRepository chequeRepository;
-
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private EntranceRepository entranceRepository;
-
-    @Autowired
-    private MedicalPreparationsRepository medicalPreparationsRepository;
-
-    @Autowired
-    private PaidTreatmentRepository paidTreatmentRepository;
-
-    @Autowired
-    private PaidTreatmentPreparationRepository paidTreatmentPreparationRepository;
-
-    @Autowired
-    private ShelvingRepository shelvingRepository;
-
-    @Autowired
-    private TypePreparationRepository typePreparationRepository;
-
-    @Autowired
-    private TypeTreatmentRepository typeTreatmentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
-    private WarehouseRepository warehouseRepository;
 
     @GetMapping()
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -83,11 +33,9 @@ public class DumpRestoreController {
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Resource> getFile() throws IOException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public ResponseEntity<Resource> getFile() throws IOException, InterruptedException {
 
-        DumpRestoreService dumpRestoreService = getDumpRestoreService();
-
-        dumpRestoreService.dump("dump.stoun");
+        DumpRestoreService.dump("temp/dump.stoun");
 
         Path path = Paths.get("temp/dump.stoun");
         Resource resource = null;
@@ -103,36 +51,13 @@ public class DumpRestoreController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public String upload(@RequestParam("file") MultipartFile file) throws IOException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        File convFile = new File("temp/" + Objects.requireNonNull(file.getOriginalFilename()));
+    public String upload(@RequestParam("file") MultipartFile file) throws IOException, InterruptedException {
+        File convFile = new File(String.format("temp/%d.stoun", System.currentTimeMillis() / 1000L));
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
 
-        DumpRestoreService dumpRestoreService = getDumpRestoreService();
-
-        dumpRestoreService.restore(convFile);
+        DumpRestoreService.restore(convFile.getPath());
         return "redirect:/";
-    }
-
-    private DumpRestoreService getDumpRestoreService() {
-        DumpRestoreService dumpRestoreService = new DumpRestoreService();
-        dumpRestoreService.addRepository(paidTreatmentPreparationRepository);
-        dumpRestoreService.addRepository(entranceRepository);
-        dumpRestoreService.addRepository(cancellationRepository);
-        dumpRestoreService.addRepository(paidTreatmentRepository);
-        dumpRestoreService.addRepository(medicalPreparationsRepository);
-        dumpRestoreService.addRepository(chequeRepository);
-        dumpRestoreService.addRepository(userRoleRepository);
-        dumpRestoreService.addRepository(shelvingRepository);
-        dumpRestoreService.addRepository(employeeRepository);
-        dumpRestoreService.addRepository(clientRepository);
-        dumpRestoreService.addRepository(applicationRepository);
-        dumpRestoreService.addRepository(warehouseRepository);
-        dumpRestoreService.addRepository(userRepository);
-        dumpRestoreService.addRepository(typeTreatmentRepository);
-        dumpRestoreService.addRepository(typePreparationRepository);
-
-        return dumpRestoreService;
     }
 }

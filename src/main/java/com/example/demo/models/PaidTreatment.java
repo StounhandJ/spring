@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,13 @@ public class PaidTreatment {
     public Long id;
 
     @NotNull
+    @Min(value = 0L)
     public int amount;
+
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @FutureOrPresent
+    public Date date_of_event;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,11 +35,6 @@ public class PaidTreatment {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     public TypeTreatment typeTreatment;
-
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @FutureOrPresent
-    public Date date_of_event;
 
     @OneToMany(mappedBy = "paidTreatment")
     Set<PaidTreatmentPreparation> medicalPreparations;

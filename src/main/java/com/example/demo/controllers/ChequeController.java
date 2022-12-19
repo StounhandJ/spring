@@ -41,7 +41,6 @@ public class ChequeController {
             model.addAttribute("cheques", chequeRepository.findAll());
         }
 
-        model.addAttribute("cheques", chequeRepository.findAll());
         model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         return "cheque/main";
     }

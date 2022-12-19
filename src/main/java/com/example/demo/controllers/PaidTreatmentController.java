@@ -45,7 +45,6 @@ public class PaidTreatmentController {
         } else {
             model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         }
-        model.addAttribute("paidTreatments", paidTreatmentRepository.findAll());
         model.addAttribute("applications", applicationRepository.findAll());
         model.addAttribute("typeTreatments", typeTreatmentRepository.findAll());
         return "paidTreatment/main";

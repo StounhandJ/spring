@@ -10,7 +10,7 @@
 
 <div th:insert="header">...</div>
 
-<h1>Все Стелажи</h1>
+<h1>Все Стеллажи</h1>
 <a class="underline text-blue-600" href="/shelving/add" sec:authorize="isAuthenticated()">Добавить стеллаж</a>
 <a class="underline text-blue-600"  href="/shelving/filter">Поиск стеллажа</a>
 <div th:each="shelving : ${shelvings}">

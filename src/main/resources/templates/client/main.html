@@ -15,7 +15,7 @@
 <div th:each="client : ${clients}">
     <div class="max-w-sm rounded overflow-hidden shadow-lg">
         <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2" th:text="${client.user.name}"/>
+            <div class="font-bold text-xl mb-2" th:text="${client.user.surname}+' '+${client.user.name}+' '+${client.user.login}"/>
         </div>
         <div class="px-6 pt-4 pb-2">
             <a class="underline text-blue-600" th:href="'/client/edit/'+${client.id}"

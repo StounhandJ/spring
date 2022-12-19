@@ -22,7 +22,7 @@
                 <option th:each="user : ${users}"
                         th:if="${user.active && ((client.user != null && user.id.equals(client.user.id)) || (user.employee==null && user.client==null))}"
                         th:value="${user.id}"
-                        th:text="${user.name + ' | ' + user.birthdate}">
+                        th:text="${user.login + ' | ' + user.birthdate}">
                 </option>
             </select>
         </div>

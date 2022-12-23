@@ -4,6 +4,7 @@ package com.example.demo.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class Cheque {
     public Long id;
 
     @NotNull
+    @Min(value = 0L)
     public int amount;
 
     @NotNull

@@ -26,6 +26,7 @@ public class User implements UserDetails {
     private String login;
 
     @NotBlank
+    @Size(min = 1, max = 70)
     private String password;
 
     @NotNull

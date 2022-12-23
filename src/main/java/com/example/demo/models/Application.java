@@ -4,9 +4,7 @@ package com.example.demo.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +22,12 @@ public class Application {
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @PastOrPresent
     public Date application_date;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @FutureOrPresent
     public Date date_of_treatment;
 
     @NotNull

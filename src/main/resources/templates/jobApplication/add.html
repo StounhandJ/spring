@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Добавление новой заявки на работу</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.maskedinput@1.4.1/src/jquery.maskedinput.min.js"
+            type="text/javascript"></script>
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div class="w-full max-w-xs">
+    <form th:action="${'/jobApplication/add'}" method="post" th:object="${jobApplication}"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+        <input th:field="*{candidate}" type="hidden"/>
+        <input th:field="*{date}" type="hidden"/>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Опыт работы</label>
+            <div style="color: red" th:if="${#fields.hasErrors('work_experience')}"
+                 th:errors="*{work_experience}"></div>
+            <input th:field="*{work_experience}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="text" placeholder="Введите опыт работы"/>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Желаемая должность</label>
+            <div style="color: red" th:if="${#fields.hasErrors('desired_position')}"
+                 th:errors="*{desired_position}"></div>
+            <input th:field="*{desired_position}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="text" placeholder="Введите желаемую должность"/>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Телефон для связи</label>
+            <div style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+            <input th:field="*{phone}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   type="tel" placeholder="Введите телефон для связи"/>
+        </div>
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">Добавить заявку
+        </button>
+    </form>
+</div>
+</body>
+<script>
+    $(function () {
+        $("#phone").mask("8(999) 999-9999");
+    });
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${jobApplication.date}"></title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="header">...</div>
+
+<div class="max-w-sm rounded overflow-hidden shadow-lg">
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2"
+             th:text="'ФИО: '+${jobApplication.candidate.surname}+' '+${jobApplication.candidate.name}+' '+${jobApplication.candidate.patronymic}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Пользователь: '+${jobApplication.candidate.login}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Дата: '+${jobApplication.date}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Опыт работы: '+${jobApplication.work_experience}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Желаемая должность: '+${jobApplication.desired_position}"/>
+        <div class="font-bold text-xl mb-2" th:text="'Телефон для связи: '+${jobApplication.phone}"/>
+        <div class="font-bold text-xl mb-2" style="color: red;" th:if="${jobApplication.mark==0}"
+             th:text="'Не проверенно'"/>
+        <div class="font-bold text-xl mb-2" style="color: blue;" th:if="${jobApplication.mark!=0}"
+             th:text="'Проверенно оценка: '+${jobApplication.mark}"/>
+    </div>
+</div>
+</body>
+</html>

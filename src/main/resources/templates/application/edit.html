@@ -32,7 +32,7 @@
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Дата процедуры</label>
             <div style="color: red" th:if="${#fields.hasErrors('date_of_treatment')}" th:errors="*{date_of_treatment}"></div>
-            <input th:field="*{application_date}"
+            <input th:field="*{date_of_treatment}"
                    class="shadow date_of_treatment border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                    type="date" placeholder="Выберите дату процедуры">
         </div>
